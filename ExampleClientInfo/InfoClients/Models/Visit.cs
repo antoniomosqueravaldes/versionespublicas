@@ -14,11 +14,14 @@ namespace InfoClients.Models
         [Required]        
         public DateTime Date { get; set; }
 
-        [Required, DisplayName("Client Seleted"), ReadOnly(true)]
+        [Required, DisplayName("Select client"), ReadOnly(true)]
         public int ClientId { get; set; }
 
         [Required, DisplayName("Sales Representative")]
         public int SalesRepresentativeId { get; set; }
+
+        [Required]
+        public int Net { get; set; }
 
         [DisplayName("Visit total"), ReadOnly(true), Description("Net * Visits Percentage")]
         public int VisitTotal { get; set; }

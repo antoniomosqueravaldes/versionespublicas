@@ -4,14 +4,16 @@ using InfoClients.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InfoClients.Migrations
 {
     [DbContext(typeof(DbInfoClientesContext))]
-    partial class DbInfoClientesContextModelSnapshot : ModelSnapshot
+    [Migration("20191002170623_CampoNetVisityOtros")]
+    partial class CampoNetVisityOtros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

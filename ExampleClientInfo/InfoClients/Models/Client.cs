@@ -30,12 +30,11 @@ namespace InfoClients.Models
             } 
         }
 
-        // [MaxLength(100), Required, DisplayName("Full name")]
+        [Required, DisplayName("Full name")]
         public string Fullname { get; set; }        
         
         public string Address { get; set; }
-
-       // [DataType(DataType.PhoneNumber)]
+     
         public string Phone { get; set; }
 
         [DisplayName("Country name")]

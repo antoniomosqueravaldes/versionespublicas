@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input type="date" asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,9 +26,9 @@
                 <select asp-for="SalesRepresentativeId" class ="form-control" asp-items="ViewBag.SalesRepresentativeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="VisitTotal" class="control-label"></label>
-                <input asp-for="VisitTotal" class="form-control" />
-                <span asp-validation-for="VisitTotal" class="text-danger"></span>
+                <label asp-for="Net" class="control-label"></label>
+                <input asp-for="Net" class="form-control" />
+                <span asp-validation-for="Net" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

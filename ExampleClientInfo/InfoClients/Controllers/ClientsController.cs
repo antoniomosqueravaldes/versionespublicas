@@ -70,6 +70,7 @@ namespace InfoClients.Controllers
             {
                 client.Nit = Client.EncryptString(client.Nit, key);
                 client.AvailableCredit = client.CreditLimit;
+                client.VisitsPercentage = (client.AvailableCredit * 100) / client.CreditLimit;
                 _context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

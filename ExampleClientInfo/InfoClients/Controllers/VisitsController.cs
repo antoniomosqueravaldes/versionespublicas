@@ -50,7 +50,7 @@ namespace InfoClients.Controllers
         public IActionResult Create()
         {
             ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "Fullname");
-            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Employecode");
+            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Fullname");
             return View();
         }
 
@@ -59,16 +59,24 @@ namespace InfoClients.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VisitId,Date,ClientId,SalesRepresentativeId,VisitTotal,Description")] Visit visit)
+        public async Task<IActionResult> Create([Bind("VisitId,Date,ClientId,SalesRepresentativeId,Net,Description")] Visit visit)
         {
             if (ModelState.IsValid)
             {
+                //Informacion client
+                var client = await _context.Clients.Include(v => v.Visits).Where(v => v.ClientId == visit.ClientId).FirstOrDefaultAsync();
+                client.AvailableCredit = (client.AvailableCredit - visit.Net);
+                client.VisitsPercentage = (client.AvailableCredit * 100) / client.CreditLimit;
+                visit.VisitTotal = visit.Net * client.VisitsPercentage;                                
+
+                _context.Update(client);
                 _context.Add(visit);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "Fullname", visit.ClientId);
-            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Employecode", visit.SalesRepresentativeId);
+            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Fullname", visit.SalesRepresentativeId);
             return View(visit);
         }
 
@@ -86,7 +94,7 @@ namespace InfoClients.Controllers
                 return NotFound();
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "Fullname", visit.ClientId);
-            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Employecode", visit.SalesRepresentativeId);
+            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Fullname", visit.SalesRepresentativeId);
             return View(visit);
         }
 
@@ -95,7 +103,7 @@ namespace InfoClients.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VisitId,Date,ClientId,SalesRepresentativeId,VisitTotal,Description")] Visit visit)
+        public async Task<IActionResult> Edit(int id, [Bind("VisitId,Date,ClientId,SalesRepresentativeId,Net,Description")] Visit visit)
         {
             if (id != visit.VisitId)
             {
@@ -106,6 +114,13 @@ namespace InfoClients.Controllers
             {
                 try
                 {
+                    //Informacion client
+                    var client = await _context.Clients.Include(v => v.Visits).Where(v => v.ClientId == visit.ClientId).FirstOrDefaultAsync();
+                    client.AvailableCredit = (client.AvailableCredit - visit.Net);
+                    client.VisitsPercentage = (client.AvailableCredit * 100) / client.CreditLimit;
+                    visit.VisitTotal = visit.Net * client.VisitsPercentage;
+                    
+                    _context.Update(client);
                     _context.Update(visit);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +138,7 @@ namespace InfoClients.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClientId"] = new SelectList(_context.Clients, "ClientId", "Fullname", visit.ClientId);
-            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Employecode", visit.SalesRepresentativeId);
+            ViewData["SalesRepresentativeId"] = new SelectList(_context.SalesRepresentatives, "SalesRepresentativeId", "Fullname", visit.SalesRepresentativeId);
             return View(visit);
         }
 
