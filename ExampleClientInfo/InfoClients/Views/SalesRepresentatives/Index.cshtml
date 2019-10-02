@@ -1,0 +1,41 @@
+﻿@model IEnumerable<InfoClients.Models.SalesRepresentative>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <h1>List Sales Representatives</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employecode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employecode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SalesRepresentativeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SalesRepresentativeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SalesRepresentativeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

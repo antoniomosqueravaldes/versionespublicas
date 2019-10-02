@@ -1,0 +1,89 @@
+﻿@model IEnumerable<InfoClients.Models.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List Clients</h1>
+
+<p>
+    <a class="btn btn-primary"  asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditLimit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableCredit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitsPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditLimit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableCredit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitsPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ClientId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ClientId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ClientId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
