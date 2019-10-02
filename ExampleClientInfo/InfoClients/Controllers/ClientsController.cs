@@ -7,12 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InfoClients.Data;
 using InfoClients.Models;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace InfoClients.Controllers
 {
     public class ClientsController : Controller
     {
         private readonly DbInfoClientesContext _context;
+        string key = "E546C8DF278CD5931069B522E695D4F2";
 
         public ClientsController(DbInfoClientesContext context)
         {
@@ -65,6 +68,8 @@ namespace InfoClients.Controllers
         {
             if (ModelState.IsValid)
             {
+                client.Nit = Client.EncryptString(client.Nit, key);
+                client.AvailableCredit = client.CreditLimit;
                 _context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -110,6 +115,7 @@ namespace InfoClients.Controllers
             {
                 try
                 {
+                    client.Nit = Client.EncryptString(client.Nit, key);
                     _context.Update(client);
                     await _context.SaveChangesAsync();
                 }
